@@ -2,7 +2,6 @@
 - name: Provision of instances
   hosts: all
   become: yes
-  gather_facts: False
 
   tasks:
 
@@ -12,8 +11,11 @@
       image: ami-0f7cd40eac2214b37
       group: builder
       count: 1
-      instance_tags:
-        Name: maven
+
+- name: Ensure inventory vars are set to the same value as the inventory_hostname has
+    add_host:
+      hostname: maven
+      inventory_dir: '{{ etc/ansible }}'
 
   - ec2:
       key_name: mykey
@@ -21,5 +23,8 @@
       image: ami-0f7cd40eac2214b37
       group: prod
       count: 1
-      instance_tags:
-        Name: prod
+
+- name: Ensure inventory vars are set to the same value as the inventory_hostname has
+    add_host:
+      hostname: web
+      inventory_dir: '{{ etc/ansible }}'
