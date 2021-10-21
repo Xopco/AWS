@@ -1,0 +1,89 @@
+---
+- amazon.aws.ec2:
+    key_name: mykey
+    instance_type: t2.micro
+    image: ami-0f7cd40eac2214b37
+    group: builder
+    count: 1
+
+- amazon.aws.ec2:
+    key_name: mykey
+    instance_type: t2.micro
+    image: ami-0f7cd40eac2214b37
+    group: prod
+    count: 1
+
+- amazon.aws.s3_bucket:
+    name: s3://mybacket1.test61.com
+    state: present
+
+- name: install java related packages
+  hosts: all
+  become: yes
+
+  tasks:
+
+  - name: Ensure java related packages are present
+    apt:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+        - openjdk-8-jdk
+        - tomcat9
+
+  - name: Ensure tomcat service is started
+    service:
+      name: tomcat9
+      state: started
+
+- name: install maven, download and pack java app
+  hosts: prod
+  become: yes
+
+  tasks:
+
+  - name: Ensure maven package is present
+    apt:
+      name: maven
+      state: present
+
+  - name: Ensure git package is present
+    apt:
+      name: git
+      state: present
+
+  - name: Download java app
+    git:
+      repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+      dest: /home/xopco/boxfuse-sample-java-war-hello
+
+  - name: pack java app
+    shell: mvn package
+    args:
+      chdir: /home/xopco/boxfuse-sample-java-war-hello
+    synchronize:
+    src: /home/xopco/boxfuse-sample-java-war-hello
+    dest: s3://mybacket1.test61.com
+
+
+- name: copy java app on web server
+  hosts: prod
+  become: yes
+
+  tasks:
+    synchronize:
+    src: s3://mybacket1.test61.com
+    dest: var/lib/tomcat9/mybebapps
+
+
+
+
+
+
+
+
+
+
+
+
