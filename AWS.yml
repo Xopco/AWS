@@ -2,6 +2,7 @@
 - name: Provision of instances
   hosts: all
   become: yes
+  gather_facts: False
 
   tasks:
 
