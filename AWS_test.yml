@@ -1,5 +1,6 @@
 ---
 - name: Provision of instances
+  gather_facts: false
   hosts: all
   become: yes
 
