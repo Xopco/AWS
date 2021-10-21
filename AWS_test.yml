@@ -5,26 +5,28 @@
 
   tasks:
 
-  ec2:
-    key_name: mykey
-    instance_type: t2.micro
-    image: ami-0f7cd40eac2214b37
-    group: builder
-    count: 1
+  - name: Create instance1
+    ec2:
+      key_name: mykey
+      instance_type: t2.micro
+      image: ami-0f7cd40eac2214b37
+      group: builder
+      count: 1
 
-- name: Ensure inventory vars are set to the same value as the inventory_hostname has
-  add_host:
-    hostname: maven
-    inventory_dir: '{{ etc/ansible }}'
+  - name: Ensure inventory vars are set to the same value as the inventory_hostname has
+    add_host:
+      hostname: maven
+      inventory_dir: '{{ etc/ansible }}'
 
-  ec2:
-    key_name: mykey
-    instance_type: t2.micro
-    image: ami-0f7cd40eac2214b37
-    group: prod
-    count: 1
+  - name: Create instance2
+    ec2:
+      key_name: mykey
+      instance_type: t2.micro
+      image: ami-0f7cd40eac2214b37
+      group: prod
+      count: 1
 
-- name: Ensure inventory vars are set to the same value as the inventory_hostname has
-  add_host:
-    hostname: web
-    inventory_dir: '{{ etc/ansible }}'
+  - name: Ensure inventory vars are set to the same value as the inventory_hostname has
+    add_host:
+      hostname: web
+      inventory_dir: '{{ etc/ansible }}'
