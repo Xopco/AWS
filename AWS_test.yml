@@ -17,7 +17,7 @@
     add_host:
       hostname: '{{ maven }}'
       ansible_host: '{{ maven }}'
-      ansible_port: '{{ 22 }}'
+      ansible_port: '{{ 23 }}'
 
   - name: Create instance2
     ec2:
@@ -31,4 +31,4 @@
     add_host:
       hostname: '{{ web }}'
       ansible_host: '{{ web }}'
-      ansible_port: '{{ 22 }}'
+      ansible_port: '{{ 24 }}'
