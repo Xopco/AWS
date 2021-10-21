@@ -1,0 +1,6 @@
+- amazon.aws.ec2:
+    key_name: mykey
+    instance_type: t2.micro
+    image: ami-0f7cd40eac2214b37
+    group: builder
+    count: 1
