@@ -1,6 +1,6 @@
 ---
 - name: Provision of instances
-   ec2:
+   amazon.aws.ec2:
     key_name: mykey
     instance_type: t2.micro
     image: ami-0f7cd40eac2214b37
@@ -10,7 +10,7 @@
       Name: maven
   register: ec2
 
-  ec2:
+  amazon.aws.ec2:
     key_name: mykey
     instance_type: t2.micro
     image: ami-0f7cd40eac2214b37
