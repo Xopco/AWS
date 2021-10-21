@@ -1,21 +1,24 @@
 ---
 - name: Provision of instances
-   amazon.aws.ec2:
-    key_name: mykey
-    instance_type: t2.micro
-    image: ami-0f7cd40eac2214b37
-    group: builder
-    count: 1
-    instance_tags:
-      Name: maven
-  register: ec2
+  hosts: all
+  become: yes
 
-  amazon.aws.ec2:
-    key_name: mykey
-    instance_type: t2.micro
-    image: ami-0f7cd40eac2214b37
-    group: prod
-    count: 1
-    instance_tags:
-      Name: prod
-  register: ec2
+  tasks:
+
+  - ec2:
+      key_name: mykey
+      instance_type: t2.micro
+      image: ami-0f7cd40eac2214b37
+      group: builder
+      count: 1
+      instance_tags:
+        Name: maven
+
+  - ec2:
+      key_name: mykey
+      instance_type: t2.micro
+      image: ami-0f7cd40eac2214b37
+      group: prod
+      count: 1
+      instance_tags:
+        Name: prod
