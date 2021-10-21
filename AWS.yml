@@ -6,24 +6,22 @@
   tasks:
 
   - ec2:
-    key_name: mykey
-    instance_type: t2.micro
-    image: ami-0f7cd40eac2214b37
-    group: builder
-    count: 1
-    instance_tags:
-      Name: maven
-  register: ec2
+      key_name: mykey
+      instance_type: t2.micro
+      image: ami-0f7cd40eac2214b37
+      group: builder
+      count: 1
+      instance_tags:
+        Name: maven
 
-  ec2:
-    key_name: mykey
-    instance_type: t2.micro
-    image: ami-0f7cd40eac2214b37
-    group: prod
-    count: 1
-    instance_tags:
-      Name: prod
-  register: ec2
+  - ec2:
+      key_name: mykey
+      instance_type: t2.micro
+      image: ami-0f7cd40eac2214b37
+      group: prod
+      count: 1
+      instance_tags:
+        Name: prod
 
 - amazon.aws.s3_bucket:
     name: s3://mybacket1.test61.com
