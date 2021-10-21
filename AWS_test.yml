@@ -1,6 +1,5 @@
 ---
 - name: Provision of instances
-  gather_facts: false
   hosts: all
   become: yes
 
@@ -14,10 +13,11 @@
       group: builder
       count: 1
 
-  - name: Ensure inventory vars are set to the same value as the inventory_hostname has
+  - name: Add a host alias that we reach through a tunnel (Ansible 2.0 and newer)
     add_host:
-      hostname: maven
-      inventory_dir: '{{ etc/ansible }}'
+      hostname: '{{ maven }}'
+      ansible_host: '{{ maven }}'
+      ansible_port: '{{ 22 }}'
 
   - name: Create instance2
     ec2:
@@ -27,7 +27,8 @@
       group: prod
       count: 1
 
-  - name: Ensure inventory vars are set to the same value as the inventory_hostname has
+  - name: Add a host alias that we reach through a tunnel (Ansible 2.0 and newer)
     add_host:
-      hostname: web
-      inventory_dir: '{{ etc/ansible }}'
+      hostname: '{{ web }}'
+      ansible_host: '{{ web }}'
+      ansible_port: '{{ 22 }}'
